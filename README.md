@@ -3,7 +3,7 @@
 > A self-running AI agent that curates the week's best AI & tech content and delivers it to your inbox every Sunday — powered by Claude with live web search.
 
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Scheduled-00c27c?style=flat-square&logo=github-actions)
-![Claude](https://img.shields.io/badge/Claude-haiku--3.5-5c3bff?style=flat-square)
+![Claude](https://img.shields.io/badge/Claude-Haiku--4.5-5c3bff?style=flat-square)
 ![Resend](https://img.shields.io/badge/Email-Resend_(optional)-000000?style=flat-square)
 ![Node](https://img.shields.io/badge/Node.js-20+-339933?style=flat-square&logo=node.js)
 
@@ -13,7 +13,7 @@
 
 Every Sunday at 8 AM IST, a GitHub Actions workflow:
 
-1. **Calls Claude Haiku 3.5** with web search enabled (live content scraping)
+1. **Calls Claude Haiku 4.5** with web search enabled (live content scraping)
 2. **Curates 12–15 items** across AI research, papers, news, tools, videos & blogs
 3. **Scores each item** (1–10) and flags genuine must-reads 🔴
 4. **Sends a beautiful HTML email** via Resend (optional) or outputs to console

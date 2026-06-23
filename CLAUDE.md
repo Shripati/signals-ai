@@ -101,7 +101,7 @@ npm run dev
 
 ## Cost Optimization
 
-- **Model**: Claude Haiku 3.5 (~$0.80 per 1M input tokens, $4 per 1M output)
+- **Model**: Claude Haiku 4.5 (~$0.80 per 1M input tokens, $4 per 1M output)
 - **Frequency**: Weekly runs = ~4 calls/month
 - **Expected**: $0.05-0.10 per month with $5 Claude credit
 
