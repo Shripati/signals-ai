@@ -1,0 +1,30 @@
+{
+  "name": "ai-weekly-digest",
+  "version": "1.0.0",
+  "description": "Automated weekly AI & tech digest agent powered by Claude with web search, delivered via email.",
+  "type": "module",
+  "main": "digest.js",
+  "scripts": {
+    "start": "node digest.js",
+    "dev": "node --env-file=.env.local digest.js",
+    "test": "node --env-file=.env.local digest.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.4.5",
+    "resend": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ai",
+    "digest",
+    "automation",
+    "claude",
+    "newsletter",
+    "github-actions"
+  ],
+  "author": "",
+  "license": "MIT"
+}
