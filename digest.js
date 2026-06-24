@@ -14,28 +14,31 @@ const USE_EMAIL = !!resend && RECIPIENT_EMAIL && SENDER_EMAIL;
 
 function buildPrompt() {
   const today = new Date().toDateString();
-  return `You are a world-class AI & tech research curator. Search the web and find the most important and valuable content published in the past 7 days across these categories:
+  return `You are a world-class tech & science curator with broad knowledge. Search the web and find the most important and valuable content published in the past 2 days (be very recent) across these balanced categories:
 
-1. AI & Machine Learning — new model releases, benchmarks, breakthroughs (OpenAI, Anthropic, Google DeepMind, Meta AI, Mistral, etc.)
-2. Research Papers — impactful papers from arXiv (cs.AI, cs.LG, cs.CL), Papers With Code highlights
-3. Tech News — major product launches, startup funding rounds, industry moves (HackerNews top, TechCrunch, The Verge)
-4. YouTube / Video — notable AI or tech explainer videos published this week
-5. Tools & Open Source — new AI tools, developer tools, open source releases worth knowing
-6. Blogs & Case Studies — insightful posts from thought leaders (Andrej Karpathy, Simon Willison, Lilian Weng, Sebastian Raschka, etc.)
+1. AI & Machine Learning — significant breakthroughs, new models, research (10% of digest max)
+2. Software & Development — programming, tools, frameworks, DevOps, databases, backend systems
+3. Web & Frontend — UI/UX trends, web technologies, browser innovations, design systems
+4. Cloud & Infrastructure — cloud platforms, Kubernetes, serverless, deployment tools
+5. Security & Privacy — vulnerabilities, security tools, privacy updates, compliance news
+6. Business & Startups — tech funding, acquisitions, company news, market trends
+7. Open Source — notable releases, maintainer news, community projects
+8. Science & Research — breakthroughs in physics, biology, climate, robotics, space (non-AI)
+9. Other Tech — hardware, IoT, mobile, networking, emerging technologies
 
 Return ONLY a valid JSON array — no markdown fences, no preamble, no explanation.
 
 Each item must have exactly these fields:
 - "title": string — the real title of the piece
 - "url": string — actual URL if available, else ""
-- "source": string — e.g. "arXiv", "OpenAI Blog", "YouTube – Two Minute Papers", "HackerNews", "TechCrunch"
+- "source": string — e.g. "TechCrunch", "The Verge", "GitHub Blog", "HackerNews", "Ars Technica", "WIRED"
 - "summary": string — 2–3 concrete sentences: what it is and why it matters. Be specific, not generic.
-- "tags": array — pick from: ["ai", "research", "video", "news", "tool", "blog"]
-- "score": number 1–10 — importance for an AI/tech professional
-- "critical": boolean — true only if genuinely must-read (major model release, breakthrough paper, critical industry shift). Max 2–3 items.
-- "why": string — one short phrase on why this specifically matters, e.g. "First open-weights model to beat GPT-4o on MMLU"
+- "tags": array — pick from: ["ai", "dev", "web", "cloud", "security", "business", "opensource", "science", "hardware"]
+- "score": number 1–10 — importance for a tech professional
+- "critical": boolean — true only if genuinely must-read (major acquisition, critical security issue, paradigm shift). Max 2–3 items.
+- "why": string — one short phrase on why this specifically matters, e.g. "Breaking: Major cloud outage affects millions"
 
-Aim for 12–15 items. Prioritise signal over noise. Today's date: ${today}.`;
+Aim for 12–15 items total. Ensure VARIETY across categories (no more than 20% from any single category). Prioritise signal over noise. Be recent and current. Today's date: ${today}.`;
 }
 
 // ─── Fetch Digest from Claude ──────────────────────────────────────────────────
