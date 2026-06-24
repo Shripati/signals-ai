@@ -217,6 +217,64 @@ async function sendDigest(items) {
   }
 }
 
+// ─── Error Handler ────────────────────────────────────────────────────────────
+
+async function sendErrorEmail(error) {
+  if (!USE_EMAIL) {
+    console.error("❌ ERROR:", error.message);
+    console.error("Stack:", error.stack);
+    return;
+  }
+
+  const subject = `🔴 Signal.AI Digest Error | ${new Date().toDateString()}`;
+  const errorText = `Signal.AI Digest Agent encountered an error:
+
+ERROR: ${error.message}
+
+STACK TRACE:
+${error.stack}
+
+TIME: ${new Date().toISOString()}
+
+Please check your GitHub Actions logs for more details.`;
+
+  try {
+    const { data, error: resendError } = await resend.emails.send({
+      from: `Signal.AI <${SENDER_EMAIL}>`,
+      to: RECIPIENT_EMAIL,
+      subject,
+      text: errorText,
+      html: `
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"/></head>
+<body style="font-family: monospace; background: #fff5f5; padding: 20px;">
+  <div style="max-width: 600px; margin: auto; background: white; border: 2px solid #ff3b3b; border-radius: 8px; padding: 20px;">
+    <div style="font-size: 20px; font-weight: bold; color: #cc0000; margin-bottom: 15px;">🔴 Signal.AI Digest Error</div>
+    <div style="background: #ffe0e0; padding: 10px; border-radius: 4px; margin-bottom: 15px; color: #660000;">
+      <strong>Error:</strong> ${error.message}
+    </div>
+    <div style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; white-space: pre-wrap; font-size: 12px; overflow-x: auto;">
+${error.stack}
+    </div>
+    <div style="font-size: 12px; color: #666;">
+      Time: ${new Date().toISOString()}<br/>
+      Check <a href="https://github.com/Shripati/signals-ai/actions">GitHub Actions logs</a> for details.
+    </div>
+  </div>
+</body>
+</html>`,
+    });
+    if (resendError) {
+      console.error("Failed to send error email:", resendError);
+    } else {
+      console.log("✅ Error notification sent to", RECIPIENT_EMAIL);
+    }
+  } catch (emailErr) {
+    console.error("Failed to send error email:", emailErr.message);
+  }
+}
+
 // ─── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -226,7 +284,8 @@ async function main() {
   console.log("🎉 Done!");
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("❌ Agent failed:", err.message);
+  await sendErrorEmail(err);
   process.exit(1);
 });
